@@ -1,0 +1,69 @@
+// SETUP
+
+offset = 60 // x offset
+use_5th_object = false
+
+// dont change these lmao
+size = 3 // 3 blocks tall
+newlines = 8 // 8 newlines before every image
+player_speed = 8.3405 // 0.5x
+
+// END SETUP
+
+
+
+
+extract obj_props
+
+
+$.print("reading output...")
+__text = $.readfile("out.txt").split("|")[:-1].map(v => v.split(";"))
+
+frametime = @number(__text[0][0])
+width = @number(__text[0][1])
+height = @number(__text[0][2])
+text = __text[1:]
+
+
+let characters = 0
+let aaa = []
+for j in 0..text.length {
+    frame = text[j]
+    
+    if frame.length < 2 { continue }
+    for i in 0..frame.length/2 {
+        aaa.push(frame[i*2+1])
+        characters += frame[i*2+1].length
+    }
+}
+
+lines = text.length * height
+aaa = aaa.reverse()
+
+scale = ((width+0.5)/(height+0.5)*size)/width
+len = aaa.length
+aaa.join("\n"*newlines).to_obj().with(X, offset).with(Y, lines*52-180).with(GROUPS, 1g).with(SCALING, scale).add()
+$.print(lines)
+
+special = 10.56 * (newlines + height) * scale // kinda works but not really
+$.print(special)
+$.print(scale)
+$.print("chars: ", characters)
+
+if use_5th_object { 
+    $.add(obj{
+        OBJ_ID: 901, // move
+        X: offset-15, 
+        Y: -15,
+        LOCK_TO_PLAYER_X: true,
+        MOVE_Y: 17,
+        DURATION: 137
+    })
+}
+
+// player_speed*10*frametime
+xmove = player_speed*10*frametime if !use_5th_object else 0
+move_trigger(1g, xmove, -special, 0).with(X, player_speed*30*137+30).with(GROUPS, 2g).with(SPAWN_TRIGGERED, true).with(MULTI_TRIGGER, true).add() // -199 - 2/3
+// manual while loop 🔥🔥🔥 
+spawn_trigger(2g, frametime).with(X, player_speed*30*137).with(GROUPS, 2g).with(SPAWN_TRIGGERED, true).with(MULTI_TRIGGER, true).add()
+spawn_trigger(2g, frametime).with(X, 0).add()
