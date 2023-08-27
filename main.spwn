@@ -1,7 +1,7 @@
 // SETUP
 
 offset = 60 // x offset
-use_5th_object = false
+use_5th_object = true
 
 // dont change these lmao
 size = 3 // 3 blocks tall
@@ -53,10 +53,10 @@ $.print("chars: ", characters)
 if use_5th_object { 
     $.add(obj{
         OBJ_ID: 901, // move
-        X: offset-15, 
-        Y: -15,
+        X: offset-15, Y: -15,
         LOCK_TO_PLAYER_X: true,
-        MOVE_Y: 17,
+        MOVE_Y: 17*3,
+        TARGET: 1g,
         DURATION: 137
     })
 }
