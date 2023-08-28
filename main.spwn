@@ -42,7 +42,7 @@ aaa = aaa.reverse()
 
 scale = ((width+0.5)/(height+0.5)*size)/width
 len = aaa.length
-aaa.join("\n"*newlines).to_obj().with(X, offset).with(Y, lines*52-180).with(GROUPS, 1g).with(SCALING, scale).add()
+aaa.join("\n"*newlines).to_obj().with(X, offset).with(Y, lines*52+450).with(GROUPS, 1g).with(SCALING, scale).add()
 $.print(lines)
 
 special = 10.56 * (newlines + height) * scale // kinda works but not really
